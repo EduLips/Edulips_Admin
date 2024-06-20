@@ -1,0 +1,3 @@
+echo "config/serviceaccountkey.json" >> .gitignore
+echo "edushort-cce1c-firebase-adminsdk-c3u1f-7cde21bd1b.json" >> .gitignore
+git add .gitignore
