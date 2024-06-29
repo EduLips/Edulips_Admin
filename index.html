@@ -78,7 +78,7 @@
       event.preventDefault();
 
       const formData = new FormData(this);
-      const data = Object.fromEntries(formData);
+      const data = Object.fromEntries(formData.entries());
 
       fetch('/submit-news', {
         method: 'POST',
