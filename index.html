@@ -65,10 +65,10 @@
     <textarea id="desc" name="desc" required></textarea>
 
     <label for="newslink">News Link:</label>
-    <input type="text" id="newslink" name="newslink" required>
+    <input type="url" id="newslink" name="newslink" required>
 
     <label for="imagelink">Image Link:</label>
-    <input type="text" id="imagelink" name="imagelink" required>
+    <input type="url" id="imagelink" name="imagelink" required>
 
     <button type="submit">Submit</button>
   </form>
@@ -76,16 +76,23 @@
   <script>
     document.getElementById('newsForm').addEventListener('submit', function(event) {
       event.preventDefault();
+
       const formData = new FormData(this);
+      const data = Object.fromEntries(formData);
 
       fetch('/submit-news', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(Object.fromEntries(formData))
+        body: JSON.stringify(data)
       })
-      .then(response => response.text())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.text();
+      })
       .then(data => {
         alert(data);  // Show response message from server
         document.getElementById('newsForm').reset();  // Reset form after successful submission

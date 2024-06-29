@@ -1,8 +1,7 @@
-// app.js
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
+const path = require('path');
 const { firebaseConfig } = require('./constants');
 
 // Initialize Firebase Admin SDK
@@ -22,7 +21,7 @@ app.use(bodyParser.json());
 
 // Serve HTML file for submitting news
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Endpoint to submit news
@@ -33,7 +32,7 @@ app.post('/submit-news', (req, res) => {
     return res.status(400).send('Child name is required.');
   }
 
-  const newNewsRef = newsRef.child(childName); // Use the custom child name here
+  const newNewsRef = newsRef.child(childName);
   newNewsRef.set({
     title: title,
     desc: desc,
@@ -44,6 +43,7 @@ app.post('/submit-news', (req, res) => {
     res.send('News added successfully!');
   })
   .catch((error) => {
+    console.error('Error adding news:', error.message);
     res.status(500).send('Error adding news: ' + error.message);
   });
 });
