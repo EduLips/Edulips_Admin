@@ -17,8 +17,11 @@ const newsRef = db.ref('News');
 const app = express();
 const port = 3000;
 
+<<<<<<< HEAD
 // Use CORS middleware
 app.use(cors());
+=======
+>>>>>>> 03ceea6ffa6bd044f0701e1d021df314296dc66e
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
